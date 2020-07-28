@@ -1,0 +1,85 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    // border: 1px solid red;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.App{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.title{
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-wrapper{
+    border: 1px solid red;
+    height: 30vh;
+    width: 100%;
+    .content{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+
+.dashboard-wrapper{
+    border: 1px solid red;
+    width: 100%;
+    height: 60vh;
+    .content{
+        .canvas{
+            border: 1px solid blue;
+            width: 50%;
+            height: 60vh;
+        }
+        .presets{
+            border: 1px solid red;
+            width: 20%;
+            height: 60vh; 
+        }
+        .info{
+            border: 1px solid green;
+            width: 30%;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;            
+            h1{
+                text-align: center;
+                font-size: 2.5rem;
+            }
+            .rules{
+                height: 100%;   
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                p{
+                    font-size: 1.5rem;
+                }
+            }
+        }
+    }
+}
+
+.content{
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+}
+
+.grid-wrapper{
+    background-color: red;
+    height: 80%;
+}
