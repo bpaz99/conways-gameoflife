@@ -1,16 +1,22 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef  } from 'react';
 import CanvasComponent from './CanvasComponent';
 import {bridge} from "./presets/bridge"
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import ClearIcon from '@material-ui/icons/Clear';
+import StopIcon from '@material-ui/icons/Stop';
+import SkipNextIcon from '@material-ui/icons/SkipNext';
+import ShuffleIcon from '@material-ui/icons/Shuffle';
 
 function Dashboard() {
-  const [size,setSize] = useState(150)
+  const [size,setSize] = useState(25)
   const [preset,setPreset] = useState([])
   const [isRunning,setIsRunning] = useState(false)
   const [doNext,setDoNext] = useState(false)
   const [gen,setGen] = useState(0)
   const [clear,setClear] = useState(false)
   const [randomize,setRandomize] = useState(false)
+  const [width,setWidth] = useState(0)
 
   const toggleRunning = () =>{
     setIsRunning(!isRunning)
@@ -40,21 +46,32 @@ function Dashboard() {
     // setGen("Ended")
   }
 
+  const ref = useRef(null)
+  useEffect(() => {
+    console.log(ref.current.clientHeight)
+    setWidth(ref.current.clientHeight*0.9)
+  })
+
   return (
     <div className="dashboard-wrapper">
-        <div className="content">
+        <div className="content" ref={ref}>
             <div className="canvas">
-
-
-              <CanvasComponent size={preset.length>3?preset.length:size} width={1920} height={1080} preset={preset}
+              <CanvasComponent size={preset.length>3?preset.length:size} width={width} preset={preset}
               addGeneration={addGeneration} toggleRunning={toggleRunning} isRunning={isRunning} doNext={doNext} 
               toggleNext={toggleNext} clear={clear} toggleClear={toggleClear} randomize={randomize} 
               toggleRandomize={toggleRandomize} setFinished={setFinished}/>
-              <div className="controls">Generation:{gen}</div>
-              <button onClick={toggleClear}>Clear</button>
-              <button onClick={toggleRunning}>{isRunning?"Stop":"Resume"}</button>
-              <button onClick={isRunning?null:toggleNext}>Do next</button>
-              <button onClick={toggleRandomize}>Randomize</button>
+              <div className="controls">
+                <p>Generation:{gen}</p>
+                <ClearIcon onClick={toggleClear}/>
+                {isRunning?<StopIcon onClick={toggleRunning}/>:<PlayArrowIcon onClick={toggleRunning}/>}
+                <SkipNextIcon onClick={isRunning?null:toggleNext}></SkipNextIcon>
+                <ShuffleIcon onClick={toggleRandomize}></ShuffleIcon>
+
+                {/* <button onClick={toggleClear}>Clear</button>
+                <button onClick={toggleRunning}>{isRunning?"Stop":"Resume"}</button>
+                <button onClick={isRunning?null:toggleNext}>Do next</button>
+                <button onClick={toggleRandomize}>Randomize</button> */}
+              </div>
             </div>
             <div className="presets">
             </div>

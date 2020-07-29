@@ -59,11 +59,13 @@ class CanvasComponent extends React.Component {
       })
 
       p.mousePressed = () =>{
-        this.state.grid.forEach((row,i)=>{
-          row.forEach((col,j)=>{
-            this.state.grid[i][j].checkClicked(p)
+        if(!this.props.isRunning){
+          this.state.grid.forEach((row,i)=>{
+            row.forEach((col,j)=>{
+              this.state.grid[i][j].checkClicked(p)
+            })
           })
-        })
+        }
       }
 
 
@@ -101,7 +103,7 @@ class CanvasComponent extends React.Component {
           setTimeout(()=>{
             this.setState({grid:nextGeneration})
             this.props.addGeneration()
-          },100)
+          },1)
         }
         p.loop()
       }
@@ -129,7 +131,7 @@ class CanvasComponent extends React.Component {
   }
 
   render(){
-    return (<div ref={this.myRef}></div>)
+    return (<div ref={this.myRef} className="p5canvas-wrapper"></div>)
   }
 }
 
