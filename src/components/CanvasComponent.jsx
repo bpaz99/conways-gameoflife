@@ -111,6 +111,7 @@ class CanvasComponent extends React.Component {
   }
 
   componentDidUpdate(){
+    console.log("sup",this.props.save)
     if(this.gridSize!==this.props.size){
       this.gridSize = this.props.size
       this.setState({grid:this.Make2Darray()})
@@ -129,6 +130,32 @@ class CanvasComponent extends React.Component {
         // eslint-disable-next-line react/no-direct-mutation-state
         this.state.grid=this.Make2Darray()
         // this.setState({grid:this.Make2Darray()}) //For some reason this is not working...
+    }
+    if(this.props.save){
+      console.log("SAVING FILE")
+
+      //In here we create a new file for download
+      let grid = new Array(this.gridSize)
+      for(let i=0;i<this.gridSize;i++){
+        grid[i] = new Array(this.gridSize)
+        for(let j=0;j<this.gridSize;j++){
+          grid[i][j] = this.state.grid[i][j].state
+        }
+      }
+      var a = window.document.createElement('a');
+      a.href = window.URL.createObjectURL(new Blob([JSON.stringify(grid)], { type: 'application/json' }));
+      a.download = `Preset_${Date.now()}`;
+
+      // Append anchor to body.
+      document.body.appendChild(a)
+      a.click();
+
+      // Remove anchor from body
+      document.body.removeChild(a)
+
+
+
+      this.props.toggleSave()
     }
   }
 

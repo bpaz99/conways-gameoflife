@@ -7,6 +7,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import StopIcon from '@material-ui/icons/Stop';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import ShuffleIcon from '@material-ui/icons/Shuffle';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import Preset from './Preset';
@@ -16,6 +17,7 @@ function Dashboard() {
   const [preset,setPreset] = useState([])
   const [isRunning,setIsRunning] = useState(false)
   const [doNext,setDoNext] = useState(false)
+  const [save,setSave] = useState(false)
   const [gen,setGen] = useState(0)
   const [clear,setClear] = useState(false)
   const [randomize,setRandomize] = useState(false)
@@ -53,6 +55,9 @@ function Dashboard() {
   const updateSpeed = (speed) => {
     setSpeed(200-speed)
   }
+  const toggleSave = () => {
+    setSave(!save)
+  }
 
   const ref = useRef(null)
   useEffect(() => {
@@ -66,13 +71,16 @@ function Dashboard() {
               <CanvasComponent size={preset.length>0?preset.length:25} width={width} preset={preset} gen={gen}
               addGeneration={addGeneration} toggleRunning={toggleRunning} isRunning={isRunning} doNext={doNext} 
               toggleNext={toggleNext} clear={clear} toggleClear={toggleClear} randomize={randomize} 
-              toggleRandomize={toggleRandomize} setFinished={setFinished} speed={speed}/>
+              toggleRandomize={toggleRandomize} setFinished={setFinished} speed={speed} save={save} toggleSave={toggleSave}/>
               <div className="controls">
                 <p>Generation: {gen}</p>
                 <ClearIcon onClick={toggleClear}/>
                 {isRunning?<StopIcon onClick={toggleRunning}/>:<PlayArrowIcon onClick={toggleRunning}/>}
-                <SkipNextIcon onClick={isRunning?null:toggleNext}></SkipNextIcon>
+                <SkipNextIcon onClick={isRunning?null:toggleNext}></SkipNextIcon> 
                 <ShuffleIcon onClick={toggleRandomize}></ShuffleIcon>
+                <SaveAltIcon onClick={toggleSave}></SaveAltIcon>
+
+
                 <div className="slider">
                   <Typography id="discrete-slider" gutterBottom>
                     Simulation Speed
