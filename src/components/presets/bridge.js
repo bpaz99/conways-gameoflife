@@ -1,4 +1,4 @@
-export let bridge = [
+export const bridge = [
     [
       0,
       0,
