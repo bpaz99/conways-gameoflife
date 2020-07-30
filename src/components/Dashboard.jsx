@@ -12,7 +12,7 @@ import Slider from '@material-ui/core/Slider';
 import Preset from './Preset';
 
 function Dashboard() {
-  const [size,setSize] = useState(25)
+
   const [preset,setPreset] = useState([])
   const [isRunning,setIsRunning] = useState(false)
   const [doNext,setDoNext] = useState(false)
@@ -63,7 +63,7 @@ function Dashboard() {
     <div className="dashboard-wrapper">
         <div className="content" ref={ref}>
             <div className="canvas">
-              <CanvasComponent size={preset.length>0?preset.length:size} width={width} preset={preset} gen={gen}
+              <CanvasComponent size={preset.length>0?preset.length:25} width={width} preset={preset} gen={gen}
               addGeneration={addGeneration} toggleRunning={toggleRunning} isRunning={isRunning} doNext={doNext} 
               toggleNext={toggleNext} clear={clear} toggleClear={toggleClear} randomize={randomize} 
               toggleRandomize={toggleRandomize} setFinished={setFinished} speed={speed}/>
@@ -92,24 +92,11 @@ function Dashboard() {
             <div className="presets">
               <h1>Presets</h1>
               {presets.map((preset,i)=>{
-                  return <div className="preset-wrapper" onClick={(e)=>{e.preventDefault();setGen(0);setPreset(preset.grid)}}>
-                    <Preset key={i} data={preset}/>
+                  return <div className="preset-wrapper" key={i} onClick={(e)=>{e.preventDefault();setGen(0);setPreset(preset.grid)}}>
+                    <Preset data={preset}/>
                 </div>
-                
-                
-                // 
-                // <div className="preset">
-                //   {preset.name}
-                // </div>
               })}
             </div>
-
-
-
-
-
-
-
 
             <div className="info">
                 <h1>Rules</h1>

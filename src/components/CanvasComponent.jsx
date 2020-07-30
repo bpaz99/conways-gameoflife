@@ -91,14 +91,12 @@ class CanvasComponent extends React.Component {
           // this.props.toggleRunning()
           this.props.setFinished()
           p.loop()
-          console.log("Simulation finished", this.props)
         }else{
           if(this.props.doNext){
             this.props.toggleNext()
           }
           setTimeout(()=>{
             this.setState({grid:nextGeneration})
-            console.log("Generation finished")
             this.props.addGeneration()
             p.loop()
           },this.props.speed)
@@ -109,30 +107,26 @@ class CanvasComponent extends React.Component {
   
   componentDidMount(){
     this.myP5 = new p5(this.Sketch,this.myRef.current)
-    this.state.grid = this.Make2Darray()
-    console.log("Initial setup",this.state.grid)
+    this.setState({grid:this.Make2Darray()})
   }
 
   componentDidUpdate(){
-    console.log("upd",this.props)
     if(this.gridSize!==this.props.size){
       this.gridSize = this.props.size
-      this.state.grid = this.Make2Darray()
+      this.setState({grid:this.Make2Darray()})
     }
     if(!this.props.isRunning){
       if(this.props.clear){
-        console.log("clearing")
-        this.state.grid = this.Make2Darray(0)
+        this.setState({grid:this.Make2Darray(0)})
         this.props.toggleClear()
       }else if(this.props.randomize){
-        console.log("Randomizing")
-        this.state.grid = this.Make2Darray()
+        this.setState({grid:this.Make2Darray()})
         this.props.toggleRandomize()
       }
     }
     if(this.props.preset.length>0){ 
       if(this.props.gen<1)
-        this.state.grid = this.Make2Darray()
+      this.setState({grid:this.Make2Darray()})
     }
   }
 

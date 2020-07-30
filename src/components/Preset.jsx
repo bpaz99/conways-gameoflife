@@ -12,7 +12,7 @@ function Preset(props) {
         <CardMedia
           className="preset-preview"
           image={require(`${props.data.src}`)}
-          title="Contemplative Reptile"
+          title={`${props.data.name} - preset`}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
