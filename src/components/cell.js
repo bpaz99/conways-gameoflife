@@ -10,6 +10,10 @@ export class Cell{
         p.fill(255)
       else
         p.fill(0)
+
+      p.strokeWeight(0.5);
+      p.stroke(50)
+
       p.rect(this.x,this.y,this.size-1,this.size-1)
 
       // p.mousePressed = () => {
