@@ -27,6 +27,7 @@ body{
     background-image: repeating-linear-gradient(90deg, hsla(57,0%,42%,0.09) 0px, hsla(57,0%,42%,0.09) 1px,transparent 1px, transparent 60px),repeating-linear-gradient(0deg, hsla(57,0%,42%,0.09) 0px, hsla(57,0%,42%,0.09) 1px,transparent 1px, transparent 60px),repeating-linear-gradient(0deg, hsla(57,0%,42%,0.09) 0px, hsla(57,0%,42%,0.09) 1px,transparent 1px, transparent 10px),repeating-linear-gradient(90deg, hsla(57,0%,42%,0.09) 0px, hsla(57,0%,42%,0.09) 1px,transparent 1px, transparent 10px),linear-gradient(90deg, rgb(20,20,20),rgb(20,20,20));
     height: 100vh;
     overflow: hidden;
+    width: 100%;
 }
 
 .App{
@@ -35,6 +36,17 @@ body{
     display: flex;
     flex-direction: column;
     color: white;
+    position: relative;
+}
+
+.background{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100vh;
+    height: 100%;
+    z-index: -99;
+    opacity: 1;
 }
 
 .title{
