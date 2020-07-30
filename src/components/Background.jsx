@@ -69,13 +69,12 @@ class CanvasComponent extends React.Component {
         })}) //End of neighbours check
         p.noLoop()
         if(JSON.stringify(nextGeneration)===JSON.stringify(this.state.grid)){
-            this.setState({grid:this.Make2Darray()})
-            p.loop()
+            setTimeout(()=>{
+              this.setState({grid:nextGeneration})
+          },5000)
         }else{
             setTimeout(()=>{
                 this.setState({grid:nextGeneration})
-                console.log("Run")
-                p.loop()
             },500)
             p.loop()
         }
