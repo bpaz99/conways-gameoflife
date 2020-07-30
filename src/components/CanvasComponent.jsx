@@ -126,7 +126,9 @@ class CanvasComponent extends React.Component {
     }
     if(this.props.preset.length>0){ 
       if(this.props.gen<1)
-      this.setState({grid:this.Make2Darray()})
+        // eslint-disable-next-line react/no-direct-mutation-state
+        this.state.grid=this.Make2Darray()
+        // this.setState({grid:this.Make2Darray()}) //For some reason this is not working...
     }
   }
 
