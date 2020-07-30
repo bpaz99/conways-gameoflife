@@ -111,7 +111,6 @@ class CanvasComponent extends React.Component {
   }
 
   componentDidUpdate(){
-    console.log("sup",this.props.save)
     if(this.gridSize!==this.props.size){
       this.gridSize = this.props.size
       this.setState({grid:this.Make2Darray()})
@@ -132,8 +131,6 @@ class CanvasComponent extends React.Component {
         // this.setState({grid:this.Make2Darray()}) //For some reason this is not working...
     }
     if(this.props.save){
-      console.log("SAVING FILE")
-
       //In here we create a new file for download
       let grid = new Array(this.gridSize)
       for(let i=0;i<this.gridSize;i++){
