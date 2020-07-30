@@ -1,12 +1,15 @@
 
 import React, { useState, useEffect, useRef  } from 'react';
 import CanvasComponent from './CanvasComponent';
-import {bridge} from "./presets/bridge"
+import {presets} from "./Presets"
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import ClearIcon from '@material-ui/icons/Clear';
 import StopIcon from '@material-ui/icons/Stop';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import ShuffleIcon from '@material-ui/icons/Shuffle';
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/core/Slider';
+import Preset from './Preset';
 
 function Dashboard() {
   const [size,setSize] = useState(25)
@@ -17,6 +20,7 @@ function Dashboard() {
   const [clear,setClear] = useState(false)
   const [randomize,setRandomize] = useState(false)
   const [width,setWidth] = useState(0)
+  const [speed,setSpeed] = useState(100)
 
   const toggleRunning = () =>{
     setIsRunning(!isRunning)
@@ -31,6 +35,7 @@ function Dashboard() {
     setIsRunning(false)
     setDoNext(0)
     setGen(0)
+    setPreset([])
     setClear(!clear)
 
   }
@@ -38,43 +43,74 @@ function Dashboard() {
     setIsRunning(false)
     setDoNext(false)
     setGen(0)
+    setPreset([])
     setRandomize(!randomize)
   }
   const setFinished = () => {
     setIsRunning(false)
     setDoNext(false)
-    // setGen("Ended")
+  }
+  const updateSpeed = (speed) => {
+    setSpeed(200-speed)
   }
 
   const ref = useRef(null)
   useEffect(() => {
-    console.log(ref.current.clientHeight)
     setWidth(ref.current.clientHeight*0.9)
-  })
+  },[])
 
   return (
     <div className="dashboard-wrapper">
         <div className="content" ref={ref}>
             <div className="canvas">
-              <CanvasComponent size={preset.length>3?preset.length:size} width={width} preset={preset}
+              <CanvasComponent size={preset.length>0?preset.length:size} width={width} preset={preset} gen={gen}
               addGeneration={addGeneration} toggleRunning={toggleRunning} isRunning={isRunning} doNext={doNext} 
               toggleNext={toggleNext} clear={clear} toggleClear={toggleClear} randomize={randomize} 
-              toggleRandomize={toggleRandomize} setFinished={setFinished}/>
+              toggleRandomize={toggleRandomize} setFinished={setFinished} speed={speed}/>
               <div className="controls">
-                <p>Generation:{gen}</p>
+                <p>Generation: {gen}</p>
                 <ClearIcon onClick={toggleClear}/>
                 {isRunning?<StopIcon onClick={toggleRunning}/>:<PlayArrowIcon onClick={toggleRunning}/>}
                 <SkipNextIcon onClick={isRunning?null:toggleNext}></SkipNextIcon>
                 <ShuffleIcon onClick={toggleRandomize}></ShuffleIcon>
-
-                {/* <button onClick={toggleClear}>Clear</button>
-                <button onClick={toggleRunning}>{isRunning?"Stop":"Resume"}</button>
-                <button onClick={isRunning?null:toggleNext}>Do next</button>
-                <button onClick={toggleRandomize}>Randomize</button> */}
+                <div className="slider">
+                  <Typography id="discrete-slider" gutterBottom>
+                    Simulation Speed
+                  </Typography>
+                  <Slider
+                    defaultValue={100}
+                    getAriaValueText={updateSpeed}
+                    aria-labelledby="discrete-slider"
+                    valueLabelDisplay="auto"
+                    step={1}
+                    marks={false}
+                    min={1}
+                    max={200}/>
+                  </div>
               </div>
             </div>
             <div className="presets">
+              <h1>Presets</h1>
+              {presets.map((preset,i)=>{
+                  return <div className="preset-wrapper" onClick={(e)=>{e.preventDefault();setGen(0);setPreset(preset.grid)}}>
+                    <Preset key={i} data={preset}/>
+                </div>
+                
+                
+                // 
+                // <div className="preset">
+                //   {preset.name}
+                // </div>
+              })}
             </div>
+
+
+
+
+
+
+
+
             <div className="info">
                 <h1>Rules</h1>
                 <div className="rules">
