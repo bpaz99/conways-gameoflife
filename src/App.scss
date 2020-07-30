@@ -9,9 +9,11 @@ body{
 }
 
 .App{
+    background-color: #262626;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    color: white;
 }
 
 .title{
@@ -20,10 +22,11 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-size: 1.2rem;
+    font-weight: 700;
 }
 
 .info-wrapper{
-    border: 1px solid red;
     height: 30vh;
     width: 100%;
     .content{
@@ -35,7 +38,6 @@ body{
 
 
 .dashboard-wrapper{
-    border: 1px solid red;
     width: 100%;
     height: 80vh;
     .content{
@@ -50,7 +52,6 @@ body{
             }
         }
         .controls{
-            border: 1px solid red;
             height: 10%;
             display: flex;
             flex-wrap: wrap;
@@ -58,36 +59,48 @@ body{
             align-items: center;     
             font-size: 1.5rem;
             p{
-                border: 1px solid red;
                 width: 20%;
             }
             svg{
                 font-size: 3rem;
             }
-
-            // button{
-            //     font-size: 2rem;
-                // padding: 0.3rem 0.5rem;
-                // border: none;
-                // background-color: slateblue;
-                // color:white;
-                // border-radius: 20px;
-            // }
-            // button:focus{
-            //     outline: 0;
-            // }
+            .slider{
+                width: 25%;
+                p{
+                    width: 100%;
+                    text-align: center;
+                }
+            }
         }
         .presets{
-            border: 1px solid red;
+            h1{
+                text-align: center;
+                font-size: 2.5rem;
+            }
             width: 20%;
             height: 100%; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: auto;   
+            .preset-wrapper{
+                .preset-preview{
+                    background: black;
+                    height: 200px;
+                    width: 100%;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                }
+                margin-top: 2rem;
+                width: 80%;
+            }
         }
         .info{
-            border: 1px solid green;
             width: 30%;
             height: 100%;
             display: flex;
-            flex-direction: column;            
+            flex-direction: column;           
             h1{
                 text-align: center;
                 font-size: 2.5rem;
@@ -112,6 +125,5 @@ body{
 }
 
 .grid-wrapper{
-    background-color: red;
     height: 80%;
 }
