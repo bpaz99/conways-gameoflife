@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import p5 from "p5";
 /**
  * This is a "Simplified version"
@@ -69,7 +69,7 @@ class CanvasComponent extends React.Component {
         })}) //End of neighbours check
         p.noLoop()
         if(JSON.stringify(nextGeneration)===JSON.stringify(this.state.grid)){
-            this.state.grid = this.Make2Darray()
+            this.setState({grid:this.Make2Darray()})
             p.loop()
         }else{
             setTimeout(()=>{
