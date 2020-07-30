@@ -20,7 +20,7 @@ class CanvasComponent extends React.Component {
       grid[i] = new Array(this.gridSize)
       for(let j=0;j<this.gridSize;j++){
         if (value!=null)
-        grid[i][j] = new Cell(i*cellSize,j*cellSize,cellSize-1,value)
+          grid[i][j] = new Cell(i*cellSize,j*cellSize,cellSize-1,value)
         else if(this.props.preset.length>1){
           grid[i][j] = new Cell(i*cellSize,j*cellSize,cellSize-1,this.props.preset[i][j])
         }
@@ -44,7 +44,6 @@ class CanvasComponent extends React.Component {
   }
 
   Sketch = (p) => {
-    let cellSize = this.props.width/this.gridSize
     p.setup = () => {
       p.createCanvas(this.props.width,this.props.width)
     }
@@ -67,9 +66,6 @@ class CanvasComponent extends React.Component {
           })
         }
       }
-
-
-
       // Check if stop button has been pressed - if so it will draw the previous canvas...
       if(this.props.isRunning || this.props.doNext){
         //Check next generation
@@ -78,7 +74,7 @@ class CanvasComponent extends React.Component {
         this.state.grid.forEach((row,i)=>{
           row.forEach((col,j)=>{
             if (i===0||i===this.gridSize-1||j===0||j===this.gridSize-1){
-              nextGeneration[i][j].state=this.state.grid[i][j].state
+              nextGeneration[i][j].state=0
             }else{
               let neighbours = this.checkNeighbours(i,j)
               if(this.state.grid[i][j].state === 0 && neighbours===3 )
@@ -94,39 +90,49 @@ class CanvasComponent extends React.Component {
         if(JSON.stringify(nextGeneration)===JSON.stringify(this.state.grid)){
           // this.props.toggleRunning()
           this.props.setFinished()
+          p.loop()
           console.log("Simulation finished", this.props)
         }else{
           if(this.props.doNext){
-            console.log("only did it once")
             this.props.toggleNext()
           }
           setTimeout(()=>{
             this.setState({grid:nextGeneration})
+            console.log("Generation finished")
             this.props.addGeneration()
-          },1)
+            p.loop()
+          },this.props.speed)
         }
-        p.loop()
       }
     }
   }
   
   componentDidMount(){
     this.myP5 = new p5(this.Sketch,this.myRef.current)
+    this.state.grid = this.Make2Darray()
+    console.log("Initial setup",this.state.grid)
   }
 
   componentDidUpdate(){
-    //Set up random element
-    console.log("-",this.props)
+    console.log("upd",this.props)
+    if(this.gridSize!==this.props.size){
+      this.gridSize = this.props.size
+      this.state.grid = this.Make2Darray()
+    }
     if(!this.props.isRunning){
       if(this.props.clear){
+        console.log("clearing")
         this.state.grid = this.Make2Darray(0)
-        console.log("cleared",this.props)
         this.props.toggleClear()
-      }
-      if(this.props.randomize){
+      }else if(this.props.randomize){
+        console.log("Randomizing")
         this.state.grid = this.Make2Darray()
         this.props.toggleRandomize()
       }
+    }
+    if(this.props.preset.length>0){ 
+      if(this.props.gen<1)
+        this.state.grid = this.Make2Darray()
     }
   }
 
