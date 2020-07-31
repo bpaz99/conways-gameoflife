@@ -71,7 +71,7 @@ class CanvasComponent extends React.Component {
         if(JSON.stringify(nextGeneration)===JSON.stringify(this.state.grid)){
             setTimeout(()=>{
               this.setState({grid:nextGeneration})
-          },5000)
+          },2000)
         }else{
             setTimeout(()=>{
                 this.setState({grid:nextGeneration})
@@ -104,7 +104,7 @@ class Cell{
     }
     draw(p){
       if(this.state===1) 
-        p.fill(20)
+        p.fill(30)
       else
         p.fill(0)
       p.strokeWeight(0.5);
